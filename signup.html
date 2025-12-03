@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CampusMarket</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🎓 CampusMarket</a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="login.html">Login</a>
+            </div>
+            <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container">
+            <h1 class="text-center">Join CampusMarket</h1>
+            <p class="text-center" style="color: var(--text-secondary); margin-bottom: 2rem;">Create your account to start buying and selling</p>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" required placeholder="John Doe">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">College Email</label>
+                    <input type="email" id="email" required placeholder="john.doe@college.edu">
+                </div>
+                
+                <div class="form-group">
+                    <label for="department">Department</label>
+                    <input type="text" id="department" required placeholder="Computer Science">
+                </div>
+                
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <select id="year" required>
+                        <option value="">Select Year</option>
+                        <option value="1st Year">1st Year</option>
+                        <option value="2nd Year">2nd Year</option>
+                        <option value="3rd Year">3rd Year</option>
+                        <option value="4th Year">4th Year</option>
+                        <option value="Graduate">Graduate</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="upiId">UPI ID (Optional - for receiving payments)</label>
+                    <input type="text" id="upiId" placeholder="yourname@upi">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password (min 6 characters)</label>
+                    <input type="password" id="password" required minlength="6" placeholder="••••••••">
+                </div>
+                
+                <div id="errorMessage" style="color: red; margin-bottom: 1rem; display: none;"></div>
+                <div id="successMessage" style="color: green; margin-bottom: 1rem; display: none;"></div>
+                
+                <button type="submit" class="btn-primary" style="width: 100%;">Create Account</button>
+            </form>
+            
+            <p class="text-center" style="margin-top: 1.5rem;">
+                Already have an account? <a href="login.html">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeToggle').innerHTML = newTheme === 'light' ? '🌙' : '☀️';
+        }
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeToggle').innerHTML = savedTheme === 'light' ? '🌙' : '☀️';
+        
+        // Signup form handling
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                department: document.getElementById('department').value,
+                year: document.getElementById('year').value,
+                upiId: document.getElementById('upiId').value,
+                password: document.getElementById('password').value
+            };
+            
+            const errorDiv = document.getElementById('errorMessage');
+            const successDiv = document.getElementById('successMessage');
+            errorDiv.style.display = 'none';
+            successDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    
+                    successDiv.textContent = 'Account created successfully! Redirecting...';
+                    successDiv.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    errorDiv.textContent = data.message || 'Signup failed';
+                    errorDiv.style.display = 'block';
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Error: Cannot connect to server. Make sure backend is running on http://localhost:5000';
+                errorDiv.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

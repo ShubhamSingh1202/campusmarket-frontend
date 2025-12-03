@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Item - CampusMarket</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🎓 CampusMarket</a>
+            <div class="nav-links" id="authLinks"></div>
+            <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container" style="max-width: 700px;">
+            <h1 class="text-center" id="formTitle">Create New Listing</h1>
+            
+            <form id="listingForm">
+                <div class="form-group">
+                    <label for="title">Title *</label>
+                    <input type="text" id="title" required maxlength="100" 
+                           placeholder="e.g., Engineering Mathematics Textbook">
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description *</label>
+                    <textarea id="description" required maxlength="1000" rows="5"
+                              placeholder="Describe your item in detail..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Category *</label>
+                    <select id="category" required>
+                        <option value="">Select Category</option>
+                        <option value="Books">Books</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Bags">Bags</option>
+                        <option value="Stationery">Stationery</option>
+                        <option value="Clothing">Clothing</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="condition">Condition *</label>
+                    <select id="condition" required>
+                        <option value="">Select Condition</option>
+                        <option value="New">New</option>
+                        <option value="Like New">Like New</option>
+                        <option value="Good">Good</option>
+                        <option value="Used">Used</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="price">Price (₹) *</label>
+                    <input type="number" id="price" required min="0" placeholder="e.g., 500">
+                </div>
+                
+                <div class="form-group">
+                    <label for="imageUrl">Image URL *</label>
+                    <input type="url" id="imageUrl" required 
+                           placeholder="https://example.com/image.jpg">
+                    <small style="color: var(--text-muted);">
+                        Use a direct image link from Imgur, Unsplash, or similar services
+                    </small>
+                </div>
+                
+                <div id="imagePreview" class="hidden" style="margin-bottom: 1rem;">
+                    <label>Image Preview:</label>
+                    <img id="previewImg" style="max-width: 100%; border-radius: 8px; margin-top: 0.5rem;">
+                </div>
+                
+                <div id="errorMessage" class="error-message hidden"></div>
+                <div id="successMessage" class="success-message hidden"></div>
+                
+                <div style="display: flex; gap: 1rem;">
+                    <button type="submit" class="btn-primary" style="flex: 1;">
+                        <span id="submitBtnText">Create Listing</span>
+                    </button>
+                    <a href="dashboard.html" class="btn-secondary" style="flex: 1; text-align: center; line-height: 1.5rem;">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/sell.js"></script>
+</body>
+</html>

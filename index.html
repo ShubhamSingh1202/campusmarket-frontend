@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusMarket - Buy & Sell College Stuff</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🎓 CampusMarket</a>
+            <div class="nav-links" id="authLinks">
+                <a href="index.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="login.html">Login</a>
+                <a href="signup.html" class="btn-primary">Sign Up</a>
+            </div>
+            <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Buy & Sell Used College Stuff Easily</h1>
+        <p>Connect with students, find great deals, and declutter your dorm!</p>
+        <div style="margin-top: 2rem;">
+            <a href="signup.html" class="btn-primary" style="padding: 1rem 2rem; font-size: 1.2rem; margin-right: 1rem;">Get Started</a>
+            <a href="browse.html" class="btn-secondary" style="padding: 1rem 2rem; font-size: 1.2rem;">Browse Items</a>
+        </div>
+    </section>
+
+    <!-- Popular Categories -->
+    <div class="container">
+        <h2 class="section-title">Popular Categories</h2>
+        <div class="grid">
+            <div class="card" onclick="window.location.href='browse.html?category=Books'">
+                <div style="padding: 3rem; text-align: center; font-size: 3rem;">📚</div>
+                <div class="card-body">
+                    <h3 class="card-title">Books</h3>
+                    <p class="card-text">Textbooks, novels, and more</p>
+                </div>
+            </div>
+            <div class="card" onclick="window.location.href='browse.html?category=Electronics'">
+                <div style="padding: 3rem; text-align: center; font-size: 3rem;">💻</div>
+                <div class="card-body">
+                    <h3 class="card-title">Electronics</h3>
+                    <p class="card-text">Laptops, phones, accessories</p>
+                </div>
+            </div>
+            <div class="card" onclick="window.location.href='browse.html?category=Bags'">
+                <div style="padding: 3rem; text-align: center; font-size: 3rem;">🎒</div>
+                <div class="card-body">
+                    <h3 class="card-title">Bags</h3>
+                    <p class="card-text">Backpacks, laptop bags</p>
+                </div>
+            </div>
+            <div class="card" onclick="window.location.href='browse.html?category=Stationery'">
+                <div style="padding: 3rem; text-align: center; font-size: 3rem;">✏️</div>
+                <div class="card-body">
+                    <h3 class="card-title">Stationery</h3>
+                    <p class="card-text">Pens, notebooks, supplies</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script>
+        // Simple theme toggle
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeToggle').innerHTML = newTheme === 'light' ? '🌙' : '☀️';
+        }
+        
+        // Initialize theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeToggle').innerHTML = savedTheme === 'light' ? '🌙' : '☀️';
+        
+        // Update navbar if logged in
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null;
+        
+        if (token && user) {
+            document.getElementById('authLinks').innerHTML = `
+                <a href="index.html">Home</a>
+                <a href="browse.html">Browse</a>
+                <a href="dashboard.html">My Dashboard</a>
+                <a href="sell.html" class="btn-primary">Sell Item</a>
+                ${user.isAdmin ? '<a href="admin.html">Admin Panel</a>' : ''}
+                <span style="color: var(--text-secondary); font-size: 0.9rem;">👋 ${user.name}</span>
+                <a href="#" onclick="logout()" class="btn-secondary">Logout</a>
+            `;
+        }
+        
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - CampusMarket</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">🎓 CampusMarket</a>
+            <div class="nav-links" id="authLinks"></div>
+            <button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">🌙</button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="section-title">My Dashboard</h1>
+        
+        <!-- Stats -->
+        <div class="dashboard-stats" id="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="myListingsCount">0</div>
+                <div class="stat-label">My Listings</div>
+            </div>
+            <div class="stat-card" style="background: var(--gradient-secondary);">
+                <div class="stat-value" id="buyOrdersCount">0</div>
+                <div class="stat-label">Buy Requests Sent</div>
+            </div>
+            <div class="stat-card" style="background: var(--gradient-success);">
+                <div class="stat-value" id="sellOrdersCount">0</div>
+                <div class="stat-label">Sell Requests Received</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div style="display: flex; gap: 1rem; margin-bottom: 2rem; border-bottom: 2px solid var(--border-color);">
+          <button class="btn-secondary tab-btn active" data-tab="myListings" onclick="switchTab('myListings')">
+            My Listings
+          </button>
+          <button class="btn-secondary tab-btn" data-tab="buyOrders" onclick="switchTab('buyOrders')">
+            My Buy Requests
+          </button>
+          <button class="btn-secondary tab-btn" data-tab="sellOrders" onclick="switchTab('sellOrders')">
+            Sell Requests Received
+          </button>
+        </div>
+
+        <!-- My Listings -->
+        <div id="myListings" class="tab-content">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2>My Listings</h2>
+            <a href="sell.html" class="btn-primary">+ Add New Listing</a>
+          </div>
+          <div id="myListingsGrid" class="grid">
+            <div class="loading">Loading your listings...</div>
+          </div>
+        </div>
+
+        <!-- Buy Orders -->
+        <div id="buyOrders" class="tab-content hidden">
+          <h2>My Buy Requests</h2>
+          <div id="buyOrdersList"></div>
+        </div>
+
+        <!-- Sell Orders -->
+        <div id="sellOrders" class="tab-content hidden">
+          <h2>Sell Requests Received</h2>
+          <div id="sellOrdersList"></div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
