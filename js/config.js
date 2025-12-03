@@ -5,7 +5,7 @@
 // Local development: http://localhost:5000
 // Production: https://your-backend-url.onrender.com (or Railway, etc.)
 
-const API_BASE_URL = 'https://campusmarket-api.onrender.com/';
+const API_BASE_URL = 'https://campusmarket-backend-h8c1.onrender.com';
 
 const API_ENDPOINTS = {
   // Auth
